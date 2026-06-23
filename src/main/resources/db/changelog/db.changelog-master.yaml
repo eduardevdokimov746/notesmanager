@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: create_users_and_notes_tables.sql
+      relativeToChangelogFile: true
+  - include:
+      file: create_note_bodies_table.yaml
+      relativeToChangelogFile: true

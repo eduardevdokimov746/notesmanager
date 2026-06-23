@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - preConditions:
+    - and:
+      - dbms:
+          type: postgresql
+      - not:
+          tableExists: note_bodies
+  - changeSet:
+      id: 1
+      author: eduard
+      comment: Create note_bodies table
+      logicalFilePath: create_note_bodies_table.yaml
+      changes:
+        - createTable:
+            tableName: note_bodies
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: note_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: html
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: position
+                  type: smallint
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: note_id
+            baseTableName: note_bodies
+            referencedTableName: notes
+            referencedColumnNames: id
+            constraintName: fgk_note_id
+      rollback:
+        - dropTable:
+            tableName: note_bodies

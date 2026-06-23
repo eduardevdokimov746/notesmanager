@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+#  java:
+#    build:
+#      context: .
+#    container_name: notesmanager_java
+#    ports:
+#      - 8080:8080
+#    env_file:
+#      - env/app.env
+#    depends_on:
+#      - db
+#    networks:
+#      notesmanager_net:
+#        ipv4_address: 11.13.0.11
+
+  db:
+    image: postgres:18-alpine
+    container_name: notesmanager_db
+    restart: always
+    env_file:
+      - env/db.env
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db:/var/lib/postgresql/18/docker
+    networks:
+      notesmanager_net:
+        ipv4_address: 11.13.0.20
+
+networks:
+  notesmanager_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 11.13.0.0/16

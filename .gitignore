@@ -33,5 +33,6 @@ build/
 
 ### Docker ###
 /docker/db/
+/docker/env/*
 !/docker/env/app_example.env
 !/docker/env/db_example.env

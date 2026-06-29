@@ -1,7 +1,6 @@
 --liquibase formatted sql
-
 --changeset eduard:1 logicalFilePath:create_users_and_notes_tables.sql
---comment: /* Create users and notes tables */
+--comment Create users and notes tables
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,

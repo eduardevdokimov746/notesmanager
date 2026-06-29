@@ -1,10 +1,17 @@
 databaseChangeLog:
   - include:
+      file: dev/data.sql
+      relativeToChangelogFile: true
+      labels: data
+  - include:
       file: create_users_and_notes_tables.sql
       relativeToChangelogFile: true
+      labels: migration
   - include:
       file: create_body_unit_type_enum.sql
       relativeToChangelogFile: true
+      labels: migration
   - include:
       file: create_note_bodies_table.yaml
       relativeToChangelogFile: true
+      labels: migration

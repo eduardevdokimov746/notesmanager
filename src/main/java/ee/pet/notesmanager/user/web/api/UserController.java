@@ -1,28 +1,27 @@
 package ee.pet.notesmanager.user.web.api;
 
-import ee.pet.notesmanager.user.User;
 import ee.pet.notesmanager.user.exception.UserNotFoundException;
-import org.hibernate.SessionFactory;
+import ee.pet.notesmanager.user.persistance.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private final SessionFactory sessionFactory;
+    private final UserRepository userRepository;
 
-    public UserController(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<GetByIdResponse> getById(@PathVariable int id) {
-        var userOrNull = this.sessionFactory.fromSession(session -> session.find(User.class, id));
+        var optionalUser = this.userRepository.findById(id);
 
-        if (userOrNull == null) {
+        if (optionalUser.isEmpty()) {
             throw new UserNotFoundException(id);
         }
 
-        return ResponseEntity.ok(GetByIdResponse.buildBy(userOrNull));
+        return ResponseEntity.ok(GetByIdResponse.buildBy(optionalUser.get()));
     }
 }
